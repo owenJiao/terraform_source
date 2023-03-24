@@ -161,7 +161,7 @@ variable "service_network_cidr" {
 
 variable "autoscaler_version" {
   description = "Autoscaler version"
-  default = "1.23.10"
+  default = "1.23.17"
   type = string
 }
 

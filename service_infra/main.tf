@@ -99,21 +99,23 @@ module "cce" {
   data_volumes_volumetype  = var.data_volumes_volumetype
   project_name = var.project_name
   nodepool_flavor_id = var.nodepool_flavor_id
+  elb_id = module.elb.elb_id
+  elb_ip = module.elb.elb_public_ip
   #nodepool_performance_type  = var.nodepool_performance_type
   # nodepool_cpu_core_count    = var.nodepool_cpu_core_count
   # nodepool_memory_size       = var.nodepool_memory_size
 }
 
-# ingress
-module "ingress" {
-     depends_on = [
-       module.cce,
-       module.elb
-     ]
-    source = "git::github.com/owenJiao/terraform_source.git//ingress-controller"
-    ingress_ip_address = module.elb.elb_public_ip
-    elb_id = module.elb.elb_id
-}
+
+# module "ingress" {
+#      depends_on = [
+#        module.cce,
+#        module.elb
+#      ]
+#     source = "git::github.com/owenJiao/terraform_source.git//ingress-controller"
+#     ingress_ip_address = module.elb.elb_public_ip
+#     elb_id = module.elb.elb_id
+# }
 
 # elb
 module "elb" {

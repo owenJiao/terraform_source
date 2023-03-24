@@ -155,7 +155,7 @@ variable "service_network_cidr" {
 
 variable "autoscaler_version" {
   description = "Autoscaler version"
-  default = "1.23.10"
+  default = "1.23.17"
   type = string
 }
 
@@ -246,6 +246,16 @@ variable "availability_zone" {
 variable "nodepool_flavor_id" {
   description = "Node pool flavor id"
   default = "c7.large.2"
+  type = string
+}
+
+variable "elb_id" {
+  description = "ELB id"
+  type = string
+}
+
+variable "elb_ip" {
+  description = "ELB ip"
   type = string
 }
 
