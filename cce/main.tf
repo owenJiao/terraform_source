@@ -34,7 +34,7 @@ data "huaweicloud_identity_projects" "project" {
 # }
 
 data "huaweicloud_cce_addon_template" "nginx_ingress" {
-  cluster_id = huaweicloud_cce_cluster.cce_turbo.id
+  #cluster_id = huaweicloud_cce_cluster.cce_turbo.id
   name       = local.nginx_ingress_name
   version    = "2.1.3"
 }
