@@ -27,11 +27,11 @@ data "huaweicloud_identity_projects" "project" {
 # }
 
 // TODO Need to create anyway
-# data "huaweicloud_cce_addon_template" "autoscaler" {
-#   cluster_id = huaweicloud_cce_cluster.cce_turbo.id
-#   name       = local.autoscaler_name
-#   version    = var.autoscaler_version
-# }
+data "huaweicloud_cce_addon_template" "autoscaler" {
+  cluster_id = huaweicloud_cce_cluster.cce_turbo.id
+  name       = local.autoscaler_name
+  version    = var.autoscaler_version
+}
 
 data "huaweicloud_cce_addon_template" "nginx_ingress" {
   cluster_id = huaweicloud_cce_cluster.cce_turbo.id
