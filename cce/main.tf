@@ -27,11 +27,11 @@ data "huaweicloud_identity_projects" "project" {
 # }
 
 // TODO Need to create anyway
-data "huaweicloud_cce_addon_template" "autoscaler" {
-  cluster_id = huaweicloud_cce_cluster.cce_turbo.id
-  name       = local.autoscaler_name
-  version    = var.autoscaler_version
-}
+# data "huaweicloud_cce_addon_template" "autoscaler" {
+#   cluster_id = huaweicloud_cce_cluster.cce_turbo.id
+#   name       = local.autoscaler_name
+#   version    = var.autoscaler_version
+# }
 
 data "huaweicloud_cce_addon_template" "nginx_ingress" {
   cluster_id = huaweicloud_cce_cluster.cce_turbo.id
@@ -103,27 +103,27 @@ resource "huaweicloud_cce_addon" "nginx-ingress" {
 }
 
 
-resource "huaweicloud_cce_addon" "autoscaler" {
-  depends_on = [
-    resource.huaweicloud_cce_node_pool.node_pool
-  ]
-  cluster_id    = huaweicloud_cce_cluster.cce_turbo.id
-  template_name = data.huaweicloud_cce_addon_template.autoscaler.name
-  version       = data.huaweicloud_cce_addon_template.autoscaler.version
-  values {
-    basic_json = jsonencode(jsondecode(data.huaweicloud_cce_addon_template.autoscaler.spec).basic)
-    custom_json = jsonencode(
-      merge(
-        jsondecode(data.huaweicloud_cce_addon_template.autoscaler.spec).parameters.custom,
-        {
-          cluster_id       = huaweicloud_cce_cluster.cce_turbo.id
-          tenant_id        = data.huaweicloud_identity_projects.project.id
-        }
-      )
-    )
-    flavor_json = jsonencode(jsondecode(data.huaweicloud_cce_addon_template.autoscaler.spec).parameters.flavor1)
-  }
-}
+# resource "huaweicloud_cce_addon" "autoscaler" {
+#   depends_on = [
+#     resource.huaweicloud_cce_node_pool.node_pool
+#   ]
+#   cluster_id    = huaweicloud_cce_cluster.cce_turbo.id
+#   template_name = data.huaweicloud_cce_addon_template.autoscaler.name
+#   version       = data.huaweicloud_cce_addon_template.autoscaler.version
+#   values {
+#     basic_json = jsonencode(jsondecode(data.huaweicloud_cce_addon_template.autoscaler.spec).basic)
+#     custom_json = jsonencode(
+#       merge(
+#         jsondecode(data.huaweicloud_cce_addon_template.autoscaler.spec).parameters.custom,
+#         {
+#           cluster_id       = huaweicloud_cce_cluster.cce_turbo.id
+#           tenant_id        = data.huaweicloud_identity_projects.project.id
+#         }
+#       )
+#     )
+#     flavor_json = jsonencode(jsondecode(data.huaweicloud_cce_addon_template.autoscaler.spec).parameters.flavor1)
+#   }
+# }
 
 
 resource "huaweicloud_cce_node_pool" "node_pool" {
