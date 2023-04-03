@@ -65,42 +65,42 @@ resource "huaweicloud_cce_cluster" "cce_turbo" {
 }
 
 
-resource "huaweicloud_cce_addon" "nginx-ingress" {
-  cluster_id = huaweicloud_cce_cluster.cce_turbo.id
-  template_name = "nginx-ingress"
-  version    = "2.1.3"
-  values {
-    basic = jsondecode(data.huaweicloud_cce_addon_template.nginx_ingress.spec).basic
-    custom_json = jsonencode(merge(
-      jsondecode(data.huaweicloud_cce_addon_template.nginx_ingress.spec).parameters.custom,
-      {
-        "defaultBackend" = {
-           "enabled": true
-        },
-        "service"= {
-					"annotations"= {
-						"kubernetes.io/elb.class"= "performance",
-						"kubernetes.io/elb.id"= var.elb_id
-					},
-					"loadBalancerIP"= var.elb_ip
-				}
-      }
-    ))
-    flavor_json = jsonencode(merge(
-      jsondecode(data.huaweicloud_cce_addon_template.nginx_ingress.spec).parameters.flavor1,
-      {
-        "replicas"= 2,
-        "resources"= [{
-          "limitsCpu"= "500m",
-          "limitsMem"= "500Mi",
-          "name"= "nginx-ingress",
-          "requestsCpu"= "500m",
-          "requestsMem"= "500Mi"
-        }]
-      }
-    ))
-  }
-}
+# resource "huaweicloud_cce_addon" "nginx-ingress" {
+#   cluster_id = huaweicloud_cce_cluster.cce_turbo.id
+#   template_name = "nginx-ingress"
+#   version    = "2.1.3"
+#   values {
+#     basic = jsondecode(data.huaweicloud_cce_addon_template.nginx_ingress.spec).basic
+#     custom_json = jsonencode(merge(
+#       jsondecode(data.huaweicloud_cce_addon_template.nginx_ingress.spec).parameters.custom,
+#       {
+#         "defaultBackend" = {
+#            "enabled": true
+#         },
+#         "service"= {
+# 					"annotations"= {
+# 						"kubernetes.io/elb.class"= "performance",
+# 						"kubernetes.io/elb.id"= var.elb_id
+# 					},
+# 					"loadBalancerIP"= var.elb_ip
+# 				}
+#       }
+#     ))
+#     flavor_json = jsonencode(merge(
+#       jsondecode(data.huaweicloud_cce_addon_template.nginx_ingress.spec).parameters.flavor1,
+#       {
+#         "replicas"= 2,
+#         "resources"= [{
+#           "limitsCpu"= "500m",
+#           "limitsMem"= "500Mi",
+#           "name"= "nginx-ingress",
+#           "requestsCpu"= "500m",
+#           "requestsMem"= "500Mi"
+#         }]
+#       }
+#     ))
+#   }
+# }
 
 
 # resource "huaweicloud_cce_addon" "autoscaler" {

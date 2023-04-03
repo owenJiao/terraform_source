@@ -30,6 +30,7 @@ variable "ingress_class_is_default" {
 variable "ingress_ip_address" {
   type        = string
   description = "External Static Address for loadbalancer (Doesn't work with AWS)"
+  default = "192.9.9.1"
 
 }
 
@@ -54,5 +55,6 @@ variable "ingress_timeout" {
 variable "elb_id" {
   type        = string
   description = "Elb id"
+  default = "aaa"
 }
 

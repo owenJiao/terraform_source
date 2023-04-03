@@ -12,14 +12,14 @@ locals {
   helm_repository = "https://kubernetes.github.io/ingress-nginx"
 }
 
-# provider "helm" {
-#   kubernetes {
-#     config_path = "/Users/owenjiao/test/mykubeconfig/kubeconfig.json"
-#     #config_path = "~/.kube/config"
-#     #config_context = "docker-desktop"
-#     #config_path = "./kubeconfig"
-#   }
-# }
+provider "helm" {
+  kubernetes {
+    #config_path = "/Users/owenjiao/test/mykubeconfig/kubeconfig.json"
+    #config_path = "~/.kube/config"
+    #config_context = "docker-desktop"
+    config_path = "./kubeconfig"
+  }  
+}
 
 resource "helm_release" "ingress-nginx" {
   name             = var.ingress_release_name
@@ -41,10 +41,10 @@ resource "helm_release" "ingress-nginx" {
     value = var.ingress_class_is_default
   }
 
-  set {
-    name = "controller.service.loadBalancerIP"
-    value = var.ingress_ip_address
-  }
+  # set {
+  #   name = "controller.service.loadBalancerIP"
+  #   value = var.ingress_ip_address
+  # }
 
   set {
     name = "defaultBackend.enabled"
@@ -97,13 +97,30 @@ resource "helm_release" "ingress-nginx" {
   }
 
   set {
-    name = "controller.service.annotations.kubernetes\\.io/elb\\.id"
-    value = var.elb_id
+    name = "controller.service.type"
+    value = "NodePort"
   }
 
   set {
-    name = "controller.service.annotations.kubernetes\\.io/elb\\.class"
-    value = "performance"
+    name = "controller.service.nodePorts.http"
+    value = "32080"
   }
+
+  set {
+    name = "controller.service.nodePorts.https"
+    value = "32443"
+  }
+
+  
+
+  # set {
+  #   name = "controller.service.annotations.kubernetes\\.io/elb\\.id"
+  #   value = var.elb_id
+  # }
+
+  # set {
+  #   name = "controller.service.annotations.kubernetes\\.io/elb\\.class"
+  #   value = "performance"
+  # }
   
 }
