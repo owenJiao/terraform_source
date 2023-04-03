@@ -12,14 +12,14 @@ locals {
   helm_repository = "https://kubernetes.github.io/ingress-nginx"
 }
 
-provider "helm" {
-  kubernetes {
-    #config_path = "/Users/owenjiao/test/mykubeconfig/kubeconfig.json"
-    #config_path = "~/.kube/config"
-    #config_context = "docker-desktop"
-    config_path = "./kubeconfig"
-  }  
-}
+# provider "helm" {
+#   kubernetes {
+#     #config_path = "/Users/owenjiao/test/mykubeconfig/kubeconfig.json"
+#     #config_path = "~/.kube/config"
+#     #config_context = "docker-desktop"
+#     config_path = "./kubeconfig"
+#   }  
+# }
 
 resource "helm_release" "ingress-nginx" {
   name             = var.ingress_release_name
