@@ -15,9 +15,9 @@ locals {
 # provider "helm" {
 #   kubernetes {
 #     #config_path = "/Users/owenjiao/test/mykubeconfig/kubeconfig.json"
-#     #config_path = "~/.kube/config"
-#     #config_context = "docker-desktop"
-#     config_path = "./kubeconfig"
+#     config_path = "~/.kube/config"
+#     config_context = "docker-desktop"
+#     #config_path = "./kubeconfig"
 #   }  
 # }
 
@@ -53,12 +53,12 @@ resource "helm_release" "ingress-nginx" {
 
   set {
     name = "defaultBackend.image.registry"
-    value = "swr.cn-east-3.myhuaweicloud.com"
+    value = "owenjiao" #"swr.cn-east-3.myhuaweicloud.com"
   }
 
   set {
     name = "defaultBackend.image.image"
-    value = "hwofficial/defaultbackend"
+    value = "ingress-defaultbackend" #"hwofficial/defaultbackend"
   }
 
   set {
@@ -73,17 +73,17 @@ resource "helm_release" "ingress-nginx" {
 
   set {
     name = "controller.image.registry"
-    value = "swr.cn-east-3.myhuaweicloud.com"
+    value = "owenjiao" #"swr.cn-east-3.myhuaweicloud.com"
   }
 
   set {
     name = "controller.image.image"
-    value = "hwofficial/nginx-ingress"
+    value = "ingress-controller" #"hwofficial/nginx-ingress"
   }
 
   set {
     name = "controller.image.tag"
-    value = "v1.2.1"
+    value = "v1.6.4" #"v1.2.1"
   }
 
   set {
