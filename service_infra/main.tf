@@ -107,70 +107,70 @@ module "cce" {
 }
 
 
-module "ingress" {
-     depends_on = [
-       module.cce,
-       module.elb
-     ]
-    source = "git::github.com/owenJiao/terraform_source.git//ingress-controller"
-    ingress_ip_address = module.elb.elb_public_ip
-    elb_id = module.elb.elb_id
-}
+# module "ingress" {
+#      depends_on = [
+#        module.cce,
+#        module.elb
+#      ]
+#     source = "git::github.com/owenJiao/terraform_source.git//ingress-controller"
+#     ingress_ip_address = module.elb.elb_public_ip
+#     elb_id = module.elb.elb_id
+# }
 
-# elb
-module "elb" {
-  source = "git::github.com/owenJiao/terraform_source.git//elb"
-  l7_type            =  var.l7_type
-  l7_max_connections =  var.l7_max_connections
-  l7_cps             =  var.l7_cps
-  l7_bandwidth       =  var.l7_bandwidth
-  l4_type            =  var.l4_type
-  l4_max_connections =  var.l4_max_connections
-  l4_cps             =  var.l4_cps
-  l4_bandwidth       =  var.l4_bandwidth
-  subnet_id        = module.vpc.ipv4_subnet_id
-  vpc_id           = module.vpc.vpc_id
-  lb_name            = format("%s-%s-%s", var.project_name, var.lb_name,lower(random_string.random.result))
-  cross_vpc_backend  = var.cross_vpc_backend
-  availability_zone  = var.availability_zone
-  iptype                = var.iptype
-  bandwidth_charge_mode = var.bandwidth_charge_mode
-  sharetype             = var.sharetype
-  bandwidth_size        = var.bandwidth_size
-}
+# # elb
+# module "elb" {
+#   source = "git::github.com/owenJiao/terraform_source.git//elb"
+#   l7_type            =  var.l7_type
+#   l7_max_connections =  var.l7_max_connections
+#   l7_cps             =  var.l7_cps
+#   l7_bandwidth       =  var.l7_bandwidth
+#   l4_type            =  var.l4_type
+#   l4_max_connections =  var.l4_max_connections
+#   l4_cps             =  var.l4_cps
+#   l4_bandwidth       =  var.l4_bandwidth
+#   subnet_id        = module.vpc.ipv4_subnet_id
+#   vpc_id           = module.vpc.vpc_id
+#   lb_name            = format("%s-%s-%s", var.project_name, var.lb_name,lower(random_string.random.result))
+#   cross_vpc_backend  = var.cross_vpc_backend
+#   availability_zone  = var.availability_zone
+#   iptype                = var.iptype
+#   bandwidth_charge_mode = var.bandwidth_charge_mode
+#   sharetype             = var.sharetype
+#   bandwidth_size        = var.bandwidth_size
+# }
 
 
-#rds
-module "rds" {
-  source = "git::github.com/owenJiao/terraform_source.git//rds"
-  secgroup_db_name = format("%s-%s-%s", var.project_name, var.secgroup_db_name,lower(random_string.random.result))
-  rds_instance_name = format("%s-%s-%s", var.project_name, var.rds_instance_name,lower(random_string.random.result))
-  ha_replication_mode = var.ha_replication_mode
-  primary_availability_zone = var.availability_zone
-  standby_availability_zone = var.standby_availability_zone
-  db_type = var.db_type
-  db_version = var.db_version
-  db_password = var.db_password
-  volume_type = var.volume_type
-  volume_size = var.volume_size
-  backup_strategy_start_time = var.backup_strategy_start_time
-  backup_strategy_keep_days = var.backup_strategy_keep_days
-  project_name = var.project_name
-  vpc_id = module.vpc.vpc_id
-  subnet_id = module.vpc.subnet_id
-  rds_flavor_db_type       =  var.rds_flavor_db_type
-  rds_flavor_db_version    =  var.rds_flavor_db_version
-  rds_flavor_instance_mode =  var.rds_flavor_instance_mode
-  rds_flavor_group_type =     var.rds_flavor_group_type
-  rds_flavor_vcpus =          var.rds_flavor_vcpus
-  rds_flavor_memory =         var.rds_flavor_memory
-  rds_ssl_enable =            var.rds_ssl_enable
-  rds_sg_rule_direction               = var.rds_sg_rule_direction
-  rds_sg_rule_action                  = var.rds_sg_rule_action
-  rds_sg_rule_ethertype               = var.rds_sg_rule_ethertype
-  rds_sg_rule_ports                   = var.rds_sg_rule_ports
-  rds_sg_rule_protocol                = var.rds_sg_rule_protocol
-  rds_sg_rule_priority                = var.rds_sg_rule_priority
-  rds_sg_rule_remote_ip_prefix        = var.rds_sg_rule_remote_ip_prefix
-}
+# #rds
+# module "rds" {
+#   source = "git::github.com/owenJiao/terraform_source.git//rds"
+#   secgroup_db_name = format("%s-%s-%s", var.project_name, var.secgroup_db_name,lower(random_string.random.result))
+#   rds_instance_name = format("%s-%s-%s", var.project_name, var.rds_instance_name,lower(random_string.random.result))
+#   ha_replication_mode = var.ha_replication_mode
+#   primary_availability_zone = var.availability_zone
+#   standby_availability_zone = var.standby_availability_zone
+#   db_type = var.db_type
+#   db_version = var.db_version
+#   db_password = var.db_password
+#   volume_type = var.volume_type
+#   volume_size = var.volume_size
+#   backup_strategy_start_time = var.backup_strategy_start_time
+#   backup_strategy_keep_days = var.backup_strategy_keep_days
+#   project_name = var.project_name
+#   vpc_id = module.vpc.vpc_id
+#   subnet_id = module.vpc.subnet_id
+#   rds_flavor_db_type       =  var.rds_flavor_db_type
+#   rds_flavor_db_version    =  var.rds_flavor_db_version
+#   rds_flavor_instance_mode =  var.rds_flavor_instance_mode
+#   rds_flavor_group_type =     var.rds_flavor_group_type
+#   rds_flavor_vcpus =          var.rds_flavor_vcpus
+#   rds_flavor_memory =         var.rds_flavor_memory
+#   rds_ssl_enable =            var.rds_ssl_enable
+#   rds_sg_rule_direction               = var.rds_sg_rule_direction
+#   rds_sg_rule_action                  = var.rds_sg_rule_action
+#   rds_sg_rule_ethertype               = var.rds_sg_rule_ethertype
+#   rds_sg_rule_ports                   = var.rds_sg_rule_ports
+#   rds_sg_rule_protocol                = var.rds_sg_rule_protocol
+#   rds_sg_rule_priority                = var.rds_sg_rule_priority
+#   rds_sg_rule_remote_ip_prefix        = var.rds_sg_rule_remote_ip_prefix
+# }
 
