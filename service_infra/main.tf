@@ -118,26 +118,26 @@ module "cce" {
 # }
 
 # # elb
-# module "elb" {
-#   source = "git::github.com/owenJiao/terraform_source.git//elb"
-#   l7_type            =  var.l7_type
-#   l7_max_connections =  var.l7_max_connections
-#   l7_cps             =  var.l7_cps
-#   l7_bandwidth       =  var.l7_bandwidth
-#   l4_type            =  var.l4_type
-#   l4_max_connections =  var.l4_max_connections
-#   l4_cps             =  var.l4_cps
-#   l4_bandwidth       =  var.l4_bandwidth
-#   subnet_id        = module.vpc.ipv4_subnet_id
-#   vpc_id           = module.vpc.vpc_id
-#   lb_name            = format("%s-%s-%s", var.project_name, var.lb_name,lower(random_string.random.result))
-#   cross_vpc_backend  = var.cross_vpc_backend
-#   availability_zone  = var.availability_zone
-#   iptype                = var.iptype
-#   bandwidth_charge_mode = var.bandwidth_charge_mode
-#   sharetype             = var.sharetype
-#   bandwidth_size        = var.bandwidth_size
-# }
+module "elb" {
+  source = "git::github.com/owenJiao/terraform_source.git//elb"
+  l7_type            =  var.l7_type
+  l7_max_connections =  var.l7_max_connections
+  l7_cps             =  var.l7_cps
+  l7_bandwidth       =  var.l7_bandwidth
+  l4_type            =  var.l4_type
+  l4_max_connections =  var.l4_max_connections
+  l4_cps             =  var.l4_cps
+  l4_bandwidth       =  var.l4_bandwidth
+  subnet_id        = module.vpc.ipv4_subnet_id
+  vpc_id           = module.vpc.vpc_id
+  lb_name            = format("%s-%s-%s", var.project_name, var.lb_name,lower(random_string.random.result))
+  cross_vpc_backend  = var.cross_vpc_backend
+  availability_zone  = var.availability_zone
+  iptype                = var.iptype
+  bandwidth_charge_mode = var.bandwidth_charge_mode
+  sharetype             = var.sharetype
+  bandwidth_size        = var.bandwidth_size
+}
 
 
 # #rds
